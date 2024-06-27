@@ -8,3 +8,8 @@ resource "yandex_resourcemanager_folder_iam_member" "puller" {
   role      = "container-registry.images.puller"
   member    = "serviceAccount:${yandex_iam_service_account.sa-registry-puller.id}"
 }
+resource "yandex_resourcemanager_folder_iam_member" "pusher" {
+  folder_id = var.YC_FOLDER_ID
+  role      = "container-registry.images.pusher"
+  member    = "serviceAccount:${yandex_iam_service_account.sa-registry-puller.id}"
+}
