@@ -139,7 +139,7 @@ resource "local_file" "inventory-init" {
 [kube-master]
 ${yandex_compute_instance.node-master.network_interface.0.nat_ip_address}
   EOF1
-  filename   = "../ansible/inventory-init"
+  filename   = "./ansible/inventory-init"
   depends_on = [yandex_compute_instance.node-master]
 }
 
@@ -177,7 +177,7 @@ all:
     calico_rr:
       hosts: {}
   EOF2
-  filename   = "../ansible/inventory-kubespray"
+  filename   = "./ansible/inventory-kubespray"
   depends_on = [yandex_compute_instance.node-master, yandex_compute_instance.node-worker]
 }
 
