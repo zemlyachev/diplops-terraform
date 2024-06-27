@@ -1,0 +1,48 @@
+name: Terraform CI/CD
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    env:
+      SA_TER_ACCESS_KEY: ${{ secrets.SA_TER_ACCESS_KEY }}
+      SA_TER_SECRET_KEY: ${{ secrets.SA_TER_SECRET_KEY }}
+      YC_TOKEN: ${{ secrets.YC_TOKEN }}
+      ID_RSA_PUB: ${{ secrets.ID_RSA_PUB }}
+      working-directory: .
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Save SSH Public key to file for terraform
+        run: echo $ID_RSA_PUB > id_rsa.pub
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.8.5
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+#      - name: Terraform Apply
+#        id: apply
+#        run: terraform apply -auto-approve
+      - name: Upload ansible inventory
+        uses: povetek/yandex-object-storage-action@v3
+        with:
+          access-key-id: ${{ secrets.SA_TER_ACCESS_KEY }}
+          secret-access-key: ${{ secrets.SA_TER_SECRET_KEY }}
+          bucket: diplom-terraform-state
+          path: ansible
+          clear: false
