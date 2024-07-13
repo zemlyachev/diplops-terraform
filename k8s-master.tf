@@ -6,8 +6,9 @@ resource "yandex_compute_instance" "node-master" {
   platform_id               = "standard-v3"
   allow_stopping_for_update = true
   resources {
-    cores  = 2
-    memory = 4
+    cores         = 2
+    memory        = 4
+    core_fraction = 50
   }
   boot_disk {
     initialize_params {
