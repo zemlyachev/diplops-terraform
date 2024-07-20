@@ -1,21 +1,21 @@
 all:
   hosts:
     node-master-a.ru-central1.internal:
-      ansible_host: 192.168.10.20
-      ip: 192.168.10.20
-      access_ip: 192.168.10.20
+      ansible_host: 192.168.10.9
+      ip: 192.168.10.9
+      access_ip: 192.168.10.9
     node-worker-a-1.ru-central1.internal:
-      ansible_host: 192.168.10.25
-      ip: 192.168.10.25
-      access_ip: 192.168.10.25
+      ansible_host: 192.168.10.8
+      ip: 192.168.10.8
+      access_ip: 192.168.10.8
     node-worker-b-1.ru-central1.internal:
-      ansible_host: 192.168.20.32
-      ip: 192.168.20.32
-      access_ip: 192.168.20.32
+      ansible_host: 192.168.20.12
+      ip: 192.168.20.12
+      access_ip: 192.168.20.12
     node-worker-d-1.ru-central1.internal:
-      ansible_host: 192.168.30.19
-      ip: 192.168.30.19
-      access_ip: 192.168.30.19
+      ansible_host: 192.168.30.27
+      ip: 192.168.30.27
+      access_ip: 192.168.30.27
   children:
     kube_control_plane:
       hosts:

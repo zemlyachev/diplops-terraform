@@ -13,19 +13,19 @@ resource "yandex_vpc_subnet" "subnet" {
   route_table_id = yandex_vpc_route_table.rt.id
 }
 
-resource "yandex_vpc_gateway" "nat_gateway" {
+resource "yandex_vpc_gateway" "vpc_gateway" {
   folder_id = var.YC_FOLDER_ID
-  name      = "test-gateway"
+  name      = "gateway"
   shared_egress_gateway {}
 }
 
 resource "yandex_vpc_route_table" "rt" {
   folder_id  = var.YC_FOLDER_ID
-  name       = "test-route-table"
+  name       = "route-table"
   network_id = yandex_vpc_network.network-diplom.id
 
   static_route {
     destination_prefix = "0.0.0.0/0"
-    gateway_id         = yandex_vpc_gateway.nat_gateway.id
+    gateway_id         = yandex_vpc_gateway.vpc_gateway.id
   }
 }
